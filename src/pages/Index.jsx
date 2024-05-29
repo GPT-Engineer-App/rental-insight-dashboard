@@ -1,4 +1,23 @@
 import { Box, Container, Text, VStack, Grid, GridItem, Stat, StatLabel, StatNumber, StatHelpText, Heading } from "@chakra-ui/react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
+
+const data = [
+  { name: 'Jan', value: 2400 },
+  { name: 'Feb', value: 2210 },
+  { name: 'Mar', value: 2290 },
+  { name: 'Apr', value: 2000 },
+  { name: 'May', value: 2181 },
+  { name: 'Jun', value: 2500 },
+];
+
+const pieData = [
+  { name: 'Group A', value: 400 },
+  { name: 'Group B', value: 300 },
+  { name: 'Group C', value: 300 },
+  { name: 'Group D', value: 200 },
+];
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const Index = () => {
   return (
@@ -65,6 +84,52 @@ const Index = () => {
             </Stat>
           </GridItem>
         </Grid>
+        <Box>
+          <Heading as="h2" size="lg" textAlign="center" mb={4}>
+            Market Value Rent Over Time
+          </Heading>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </Box>
+        <Box>
+          <Heading as="h2" size="lg" textAlign="center" mb={4}>
+            Applications and Favorites
+          </Heading>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Box>
+        <Box>
+          <Heading as="h2" size="lg" textAlign="center" mb={4}>
+            Neighborhood Insights
+          </Heading>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie data={pieData} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" dataKey="value" label>
+                {pieData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </Box>
       </VStack>
     </Container>
   );
